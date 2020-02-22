@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index', views.index,name="index"),
     path('', views.after_login,name="dashboard"),
+    path('website_render',views.website_render,name="website_render"),
     path('login_page/', views.login_page,name="login_page"),
     path('user_login/', views.user_login,name="user_login"),   
     path('user_logout/', views.user_logout,name="user_logout"),   

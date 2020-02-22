@@ -7,6 +7,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 def index(request):
     return render(request,'index.html',{})
 
+def website_render(request):
+    return render(request,'website_render.html',{})
+
 def user_login(request):
 
     if request.method == 'POST':
