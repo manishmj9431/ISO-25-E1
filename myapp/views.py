@@ -16,11 +16,40 @@ def about(request):
     return render(request,'about.html',{})
 
 def website_render(request):
-    clg = College.objects.filter(user_id=request.session['uid'])
-    
-    college = getCollege(clg.college_id)
-    
-    return render(request,'website_render.html',{})
+    clg = College.objects.filter(applicant_id=request.session['uid'])
+    if len(clg):
+        college = getCollege(clg[0].college_id)
+
+    if request.method == "POST":
+        print(request.POST.get("submit"))
+        if request.POST.get("submit") == "clg":
+            print(request.POST)
+            clgForm = CollegeForm(request.POST, request.FILES)
+            if clgForm.is_valid():
+                clgForm.save()
+
+        elif request.POST.get("submit") == "dept":
+            deptForm = DepartmentForm(request.POST)
+            print(deptForm)
+            if deptForm.is_valid():
+                deptForm.save()
+                return HttpResponse("Hello")
+                
+
+    clgForm = CollegeForm()
+    deptForm = DepartmentForm()
+    college_id = College.objects.get(applicant_id=str(request.session['uid']))
+    flag = True
+    dept_list = []
+    try:
+        flag = True
+        dept_list = Department.objects.filter(college_id=College.objects.get(applicant_id= request.session['uid']))
+    except:
+        flag = False
+        dept_list = []
+    subForm = SubjectForm()
+    syllabusForm = SyllabusForm()
+    return render(request,'website_render.html',{"user_id": request.session['uid'],"college_id":college_id,"clgForm":clgForm,"deptForm":deptForm,"flag":flag,"subForm":subForm,"syllabusForm":syllabusForm,"dept_list":dept_list})
 
 def user_login(request):
 

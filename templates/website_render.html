@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load widget_tweaks %}
 <html lang="en">
 <head>
     <title>Bootstrap Example</title>
@@ -65,168 +66,84 @@
 
     <div class="container">
         <h2>College Form</h2>
-        
-        <form class="form-horizontal" action="{% url 'collegeForm' %}", method="POST">
+        <form class="form-horizontal" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="college_name">College:</label>
+        <input type="hidden" name="applicant_id" value="{{user_id}}">
+        {% for field in clgForm.visible_fields %}
+        <div class="form-group">
+                <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="college_name" placeholder="Enter College Name" name="college_name">
+                        {% render_field field class+="form-control" placeholder=field.label required="required"%}
                 </div>
+               
             </div>
+        {% endfor %}
 
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="university_name">University:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="university_name" placeholder="Enter University Name" name="university_name">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="address">Address:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="address" placeholder="Enter Address" name="address">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="contact">Contact:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="contact" placeholder="Enter Telphone Number" name="contact">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="logo">Logo:</label>
-                <div class="col-sm-10">
-                    <input type="file" class="form-control" id="logo" name="logo" accept="media/*">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="college_type">College Type:</label>
-                <input type="radio" id="engineering" name="college_type" value="Engineering">
-                <label for="male">Engineering</label><br>
-                <label class="control-label col-sm-2" for="college_type"> </label>
-                <input type="radio" id="management" name="college_type" value="Management">
-                <label for="female">Management</label><br>
-                <label class="control-label col-sm-2" for="college_type"> </label>
-                <input type="radio" id="all" name="college_type" value="Both">
-                <label for="other">Both</label>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="about_us">About Us:</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="about_us" name="about_us"> </textarea>
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </div>
-            </div>
+ 
+        <label class="control-label col-sm-2" for="college_name"></label>
+        <button type="submit" name="submit"value="clg" class="btn btn-primary">Submit</button>
         </form>
+        
+     
     </div>
 </div>
 
 <div id="Paris" class="tabcontent">
     <div class="container">
         <h2>Department Form</h2>
-        <form class="form-horizontal" action="{% url 'departmentForm'%}", method="POST">
-        {% csrf_token %}
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="department_name">Department:</label>
+    
+        <form class="form-horizontal" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="college_id" value="{{college_id}}">
+        {% for field in deptForm.visible_fields %}
+        <div class="form-group">
+                <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="department_name" placeholder="Enter Department Name" name="department_name">
+                        {% render_field field class+="form-control" placeholder=field.label required="required"%}
                 </div>
             </div>
+        {% endfor %}
 
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="vision">Vision: </label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="vision" name="vision"> </textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </div>
-            </div>
-        </form>
+      
+        <label class="control-label col-sm-2" for="college_name"></label>
+        <button type="submit" name="submit"value="dept" class="btn btn-primary">Submit</button>
+    </form>
     </div>
 </div>
 
 <div id="Tokyo" class="tabcontent">
     <div class="container">
         <h2>Subject Form</h2>
-        <form class="form-horizontal" action="{% url 'subjectForm' %}", method="POST">
-        {% csrf_token %}
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="department">Department:</label>
+        <form class="form-horizontal" method="POST">
+                {% csrf_token %}
+        
+        {% if flag %}
+        <select class="form-group" name="department_id">
+            {% for i in dept_list%} 
+            <option value="{{i.department_id}}">i.department_name</option>
+            {% endfor %}
+        </select>
+        {%endif%}
+        {% for field in subForm.visible_fields %}
+        <div class="form-group">
+                <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="department_name" placeholder="Enter Department Name" name="department_name">
+                        {% render_field field class+="form-control" placeholder=field.label required="required"%}
                 </div>
             </div>
+        {% endfor %}
 
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="sem">Sem:</label>
+        {% for field in syllabusForm.visible_fields %}
+        <div class="form-group">
+                <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="sem" placeholder="Enter Sem" name="sem">
+                        {% render_field field class+="form-control" placeholder=field.label required="required"%}
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="subject">Subject Name:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="subject" placeholder="Enter Subject" name="subject">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="unit1">Unit 1: </label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="unit1" name="unit1"> </textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="unit2">Unit 2: </label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="unit2" name="unit2"> </textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="unit3">Unit 3: </label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="unit3" name="unit3"> </textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="unit4">Unit 4: </label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="unit4" name="unit4"> </textarea>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="unit5">Unit 5: </label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="unit5" name="unit5"> </textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </div>
-            </div>
-        </form>
+        {% endfor %}
+        <label class="control-label col-sm-2" for="college_name"></label>
+        <button type="submit" name="submit"value="subject" class="btn btn-primary">Submit</button>
+    </form>
     </div>
 </div>
 
