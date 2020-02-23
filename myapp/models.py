@@ -2,13 +2,26 @@ from django.db import models
 from django.contrib.auth.models import User
 
 DOMAIN_CHOICES = (
-   ('DepartmentType', 'DepartmentType'),
-   ('Engineering Management All','Engineering Management All'),
+   ('Engineering','Engineering'),
+   ('Management','Management'),
+   ('Both','Both')
 )
 
 FORUM_TYPE_CHOICES = (
     ('ForumType', 'ForumType'),
     ('Announcement CollegeLevel DepartmentLevel SemesterLevel', 'Announcement CollegeLevel DepartmentLevel SemesterLevel'),
+)
+
+DEPARTMENT_CHOICES = (
+    ('CSE', 'Computer Science'),
+    ('IT', 'Information Technology'),
+    ('EC', 'ELECTRONICS AND COMMUNICATION ENGINEERING'),
+    ('EE', 'Department of Electrical Engineering'),
+    ('EI', 'Instrumentation Engineering'),
+    ('MECH', 'Department of Mechanical Engineering'),
+    ('CIVIL', 'Department of Civil Engineering'),
+    ('MBA', 'Master of Business Administration'),
+    ('CHEMICAL', 'Chemical'),
 )
 
 # Create your models here.
@@ -31,7 +44,7 @@ class College(models.Model):
 class Department(models.Model):
     college = models.ForeignKey(College, on_delete=models.CASCADE,null=False)
     department_id = models.AutoField(primary_key=True)
-    department_name = models.CharField(max_length=50, null=False)
+    department_name = models.TextField(max_length=100,choices=DOMAIN_CHOICES)
     vision_mission = models.TextField(max_length=1000, null=False)
 
 class Teacher(models.Model):

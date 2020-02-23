@@ -15,8 +15,8 @@ import requests
 def index(request):
     return render(request,'index.html',{})
 
-def about(request):
-    return render(request,'about.html',{})
+def courses(request):
+    return render(request,'courses.html',{})
 
 def website_render(request):
     clg = College.objects.filter(applicant_id=request.session['uid'])
