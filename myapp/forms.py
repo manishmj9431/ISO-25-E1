@@ -5,12 +5,12 @@ class CollegeForm(forms.ModelForm):
 
     class Meta:
         model = College
-        fields = ('applicant_id','college_name','university','address','contact_number','logo','about_us','image1','image2','image3','image4','image5')
+        fields = ('college_name','university','address','contact_number','logo','domain','about_us','image1','image2','image3','image4','image5')
 class DepartmentForm(forms.ModelForm):
 
     class Meta:
         model = Department
-        fields = ('department_name','vision_mission','college_id')
+        fields = ('department_name','vision_mission')
 
 class SubjectForm(forms.ModelForm):
 
