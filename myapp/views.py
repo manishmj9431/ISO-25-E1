@@ -24,22 +24,19 @@ def website_render(request):
         college = getCollege(clg[0].college)
 
     if request.method == "POST":
-        print(request.POST.get("submit"))
         if request.POST.get("submit") == "clg":
             mutable_post = request.POST.copy()
             mutable_post["applicant_id"] = request.session['uid']
-            print(mutable_post)
             clgForm = CollegeForm(mutable_post, request.FILES)
             if clgForm.is_valid():
                 clgForm.save()
                 return HttpResponse("Hello")    
 
         elif request.POST.get("submit") == "dept":
-            deptForm = DepartmentForm(request.POST)
-            print(deptForm)
+            mutable_post = request.POST.copy()
+            mutable_post["college"] = clg[0].college
+            deptForm = DepartmentForm(mutable_post)
             if deptForm.is_valid():
-                deptForm.save(commit=False)
-                deptForm.college = College.objects.filter(applicant_id=request.session['uid'])[0]
                 deptForm.save()
                 return HttpResponse("Hello")
                 

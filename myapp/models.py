@@ -29,7 +29,7 @@ class College(models.Model):
     image5 = models.ImageField(upload_to = 'slider/', null=True)
 
 class Department(models.Model):
-    college = models.ForeignKey(College, on_delete=models.CASCADE,null=True)
+    college = models.ForeignKey(College, on_delete=models.CASCADE,null=False)
     department_id = models.AutoField(primary_key=True)
     department_name = models.CharField(max_length=50, null=False)
     vision_mission = models.TextField(max_length=1000, null=False)
