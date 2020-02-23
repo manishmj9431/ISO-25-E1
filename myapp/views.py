@@ -6,6 +6,7 @@ from .models import *
 from django.db.models import Avg
 import json
 from django.urls import reverse
+from myapp.forms import *
 
 # Create your views here.
 def index(request):
@@ -16,8 +17,10 @@ def about(request):
 
 def website_render(request):
     # clg = College.objects.filter(user_id=request.session['uid'])
-    #Give me complete clg object    
-    return render(request,'website_render.html',{})
+    #Give me complete clg object  
+    clgForm = CollegeForm()
+    deptForm = DepartmentForm()
+    return render(request,'website_render.html',{"clgForm":clgForm,"deptForm":deptForm})
 
 def user_login(request):
 
