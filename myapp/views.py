@@ -10,6 +10,7 @@ from myapp.forms import *
 from GoogleNews import GoogleNews
 from profanity_check import predict, predict_prob
 import requests
+from django.utils import timezone
 
 # Create your views here.
 def index(request):
@@ -224,6 +225,18 @@ def college(request, college_id):
     # return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
 
 def forums(request, college_id, forum_id):
+    
+    if request.method == "POST":
+        ForumMessage(
+            college = College.objects.get(college_id = college_id),
+            forum = Forum.objects.get(forum_id),
+            message = request.POST['message'],
+            sent_by = request.session['uid'],
+            sent_at = timezone.now(),
+            isAnonymous = request.POST['isAnonymous']
+            ).save()
+        return HttpResponse("Hello")
+    
     messages = []
     msgs = ForumMessage.objects.filter(college = college_id, forum = forum_id)
 
@@ -292,7 +305,6 @@ def getBooks(query, num_books):
         i += 1
 
     return books
-
 
 def predict_profanity(message):
     return predict([message])
