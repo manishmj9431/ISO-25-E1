@@ -8,8 +8,10 @@ DOMAIN_CHOICES = (
 )
 
 FORUM_TYPE_CHOICES = (
-    ('ForumType', 'ForumType'),
-    ('Announcement CollegeLevel DepartmentLevel SemesterLevel', 'Announcement CollegeLevel DepartmentLevel SemesterLevel'),
+    ('Announcement', 'Announcement'),
+    ('CollegeLevel', 'CollegeLevel'),
+    ('DepartmentLevel', 'DepartmentLevel'),
+    ('SemesterLevel', 'SemesterLevel'),
 )
 
 DEPARTMENT_CHOICES = (
