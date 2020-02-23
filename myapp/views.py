@@ -37,7 +37,18 @@ def website_render(request):
             mutable_post["college"] = clg[0].college
             deptForm = DepartmentForm(mutable_post)
             if deptForm.is_valid():
-                deptForm.save()
+                dep = deptForm.save()
+
+                students = []
+                for i in range(99):
+                    students.append(Student(
+                        college = clg[0],
+                        department = dep,
+                        roll_number = str(clg[0].college_name[:3]) + "_" + str(request.POST['department_name'][:3]) + str(i).zfill(3),
+                        semester = 1
+                        ))
+                
+                Student.objects.bulk_create(students)
                 return HttpResponse("Hello")
                 
 
