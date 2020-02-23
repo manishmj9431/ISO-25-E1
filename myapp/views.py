@@ -57,6 +57,7 @@ def website_render(request):
 
     clgForm = CollegeForm()
     deptForm = DepartmentForm()
+    upForm = UpcommingForm()
     college = College.objects.filter(applicant_id=str(request.session['uid']))
     flag = True
     dept_list = []
@@ -71,7 +72,7 @@ def website_render(request):
         dept_list = []
     subForm = SubjectForm()
     syllabusForm = SyllabusForm()
-    return render(request,'website_render.html',{"user_id": request.session['uid'],"college_id":college,"clgForm":clgForm,"deptForm":deptForm,"flag":flag,"subForm":subForm,"syllabusForm":syllabusForm,"dept_list":dept_list})
+    return render(request,'website_render.html',{"upForm":upForm,"user_id": request.session['uid'],"college_id":college,"clgForm":clgForm,"deptForm":deptForm,"flag":flag,"subForm":subForm,"syllabusForm":syllabusForm,"dept_list":dept_list})
 
 def user_login(request,college_id):
 

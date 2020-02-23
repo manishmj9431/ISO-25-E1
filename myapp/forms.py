@@ -20,10 +20,16 @@ class SubjectForm(forms.ModelForm):
 
     class Meta:
         model = Subject
-        fields = ('subject_name','semester','taught_by')
+        fields = ('subject_name','semester')
 
 class SyllabusForm(forms.ModelForm):
 
     class Meta:
         model = Syllabus
         fields = ('unit','unit_name','topics')
+
+class UpcommingForm(forms.ModelForm):
+
+    class Meta:
+        model = UpcomingEvents
+        fields = ('event_name','event_description','event_image','start_date','end_date')

@@ -145,11 +145,16 @@
                                                 {% csrf_token %}
                                         
                                         {% if flag %}
-                                        <select class="form-group" name="department_id">
+                                        <div class="form-group">
+                                        <label class="control-label col-sm-2" for="college_name">Department: </label>
+                                        <div class="col-sm-10">
+                                        <select name="department_id">
                                             {% for i in dept_list%} 
-                                            <option value="{{i.department_id}}">i.department_name</option>
+                                            <option class="form-control" value="{{i.department_id}}">{{i.department_name}}</option>
                                             {% endfor %}
                                         </select>
+                                        </div>
+                                    </div>
                                         {%endif%}
                                         {% for field in subForm.visible_fields %}
                                         <div class="form-group">
