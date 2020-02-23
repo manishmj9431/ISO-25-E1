@@ -26,12 +26,17 @@ def website_render(request):
             print(request.POST)
             clgForm = CollegeForm(request.POST, request.FILES)
             if clgForm.is_valid():
+                clgForm.save(commit=False)
+                clgForm.applicant_id = request.session['uid']
                 clgForm.save()
+                return HttpResponse("Hello")    
 
         elif request.POST.get("submit") == "dept":
             deptForm = DepartmentForm(request.POST)
             print(deptForm)
             if deptForm.is_valid():
+                deptForm.save(commit=False)
+                deptForm.college_id = College.objects.filter(applicant_id=request.session['uid'])[0]
                 deptForm.save()
                 return HttpResponse("Hello")
                 
@@ -259,6 +264,6 @@ def getCollege(college_id):
 def college(request, college_id):
     data = getCollege(college_id)
     
-    # return render(request, 'index.html', {"data":data})
+    return render(request, 'index.html', {"data":data})
     return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
 

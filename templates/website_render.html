@@ -68,7 +68,6 @@
         <h2>College Form</h2>
         <form class="form-horizontal" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="hidden" name="applicant_id" value="{{user_id}}">
         {% for field in clgForm.visible_fields %}
         <div class="form-group">
                 <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
