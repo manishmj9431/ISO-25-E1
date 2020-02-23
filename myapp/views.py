@@ -15,8 +15,10 @@ def about(request):
     return render(request,'about.html',{})
 
 def website_render(request):
-    # clg = College.objects.filter(user_id=request.session['uid'])
-    #Give me complete clg object    
+    clg = College.objects.filter(user_id=request.session['uid'])
+    
+    college = getCollege(clg.college_id)
+    
     return render(request,'website_render.html',{})
 
 def user_login(request):
@@ -158,9 +160,11 @@ def subjectForm(request):
 
     return render(request, 'index.html', {})
 
-def college(request, college_id):
+def getCollege(college_id):
     data = {}
+
     college = College.objects.get(college_id = college_id)
+    
     data["college_id"] = college_id
     data["college_name"] = college.college_name
     data["university"] = college.university
@@ -220,6 +224,11 @@ def college(request, college_id):
 
         data["departments"].append(dep)
 
+    return data
+
+def college(request, college_id):
+    data = getCollege(college_id)
+    
     # return render(request, 'index.html', {"data":data})
     return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
 
