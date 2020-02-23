@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Colleges(models.Model):
+class College(models.Model):
     college_id = models.AutoField(primary_key=True)
     college_name = models.CharField(max_length=50, null=False)
     university = models.CharField(max_length=50, null=False)
@@ -16,50 +16,50 @@ class Colleges(models.Model):
     image4 = models.ImageField(upload_to = 'slider/', null=True)
     image5 = models.ImageField(upload_to = 'slider/', null=True)
 
-class Departments(models.Model):
-    college_id = models.ForeignKey(Colleges, on_delete=models.CASCADE)
+class Department(models.Model):
+    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
     department_id = models.AutoField(primary_key=True)
     department_name = models.CharField(max_length=50, null=False)
     vision_mission = models.TextField(max_length=1000, null=False)
 
-class Teachers(models.Model):
-    college_id = models.ForeignKey(Colleges, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Departments, on_delete=models.CASCADE)
+class Teacher(models.Model):
+    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
     teacher_id = models.AutoField(primary_key=True)
     teacher_name = models.CharField(max_length=50, null=False)
 
-class Students(models.Model):
-    college_id = models.ForeignKey(Colleges, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Departments, on_delete=models.CASCADE)
+class Student(models.Model):
+    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
     roll_number = models.CharField(primary_key=True, max_length=200)
     semester = models.IntegerField(null=False)
 
-class Subjects(models.Model):
-    college_id = models.ForeignKey(Colleges, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Departments, on_delete=models.CASCADE)
+class Subject(models.Model):
+    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
     subject_id = models.AutoField(primary_key=True)
     subject_name = models.CharField(max_length=50, null=False)
     semester = models.IntegerField(null=False)
-    taught_by = models.ForeignKey(Teachers, on_delete=models.SET_NULL, null=True)
+    taught_by = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
 
 class Syllabus(models.Model):
-    college_id = models.ForeignKey(Colleges, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Departments, on_delete=models.CASCADE)
-    subject_id = models.ForeignKey(Subjects, on_delete=models.CASCADE)
+    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
     unit = models.IntegerField(null=False)
     unit_name = models.CharField(max_length=10, null=False)
     topics = models.TextField(max_length=1000, null=False)
 
 class SyllabusStatus(models.Model):
-    college_id = models.ForeignKey(Colleges, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Departments, on_delete=models.CASCADE)
-    subject_id = models.ForeignKey(Subjects, on_delete=models.CASCADE)
+    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
     completed = models.IntegerField(null=False)
-    given_by = models.ForeignKey(Students, on_delete=models.CASCADE, null=False)
+    given_by = models.ForeignKey(Student, on_delete=models.CASCADE, null=False)
 
 class SyllabusStatusTeacher(models.Model):
-    college_id = models.ForeignKey(Colleges, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Departments, on_delete=models.CASCADE)
-    subject_id = models.ForeignKey(Subjects, on_delete=models.CASCADE)
+    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
     completed = models.IntegerField(null=False)
-    given_by = models.ForeignKey(Teachers, on_delete=models.CASCADE, null=False)
+    given_by = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=False)
