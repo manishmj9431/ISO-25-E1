@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
 from django.db.models import Avg
 import json
+from django.urls import reverse
 
 # Create your views here.
 def index(request):
@@ -32,15 +33,44 @@ def user_login(request):
                 else:
                     return redirect('teacher_home')
         else:
-            return render(request,'index.html',{})
+            return render(request,'index.html')
               
     return render(request,'index.html',{})
 
 @login_required(login_url='index')
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("admin_index"))
 
+##########################
+
+def admin_user_login(request):
+
+    if request.method == 'POST':
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username,password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                # request.session['member_cat'] = val
+                # return HttpResponseRedirect(reverse('index'))
+                return redirect('website_render')
+        else:
+            return render(request,'admin/admin_index.html',{"invalidDetails":True})
+              
+    return render(request,'admin/admin_index.html',{})
+
+@login_required(login_url='index')
+def admin_user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("admin_user_login"))
+
+def admin_login_page(request):
+    return render(request,'admin/admin_index.html')
+
+##########################
 def teacher_home(request):
     return render(request,'teacher_home.html')
 
@@ -49,7 +79,7 @@ def student_home(request):
 
 @login_required(login_url='index')
 def after_login(request):
-    val = Profile.objects.get(user=request.user).category
+    val = "student"
     if val == 'student':
         return redirect('student_home')
         # return redirect('apply_project')

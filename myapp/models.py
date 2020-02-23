@@ -1,5 +1,10 @@
 from django.db import models
 
+DOMAIN_CHOICES = (
+   ('DepartmentType', 'DepartmentType'),
+   ('Engineering Management All','Engineering Management All'),
+)
+
 # Create your models here.
 class College(models.Model):
     college_id = models.AutoField(primary_key=True)
@@ -8,7 +13,7 @@ class College(models.Model):
     address = models.CharField(max_length=200, null=False)
     contact_number = models.CharField(max_length=15, null=False)
     logo = models.ImageField(upload_to = 'logos/')
-    domain = models.TextChoices('DepartmentType', 'Engineering Management All')
+    domain = models.TextField(max_length=100, choices=DOMAIN_CHOICES)
     about_us = models.TextField(max_length=1000, null=False)
     image1 = models.ImageField(upload_to = 'slider/', null=False)
     image2 = models.ImageField(upload_to = 'slider/', null=True)
