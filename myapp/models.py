@@ -6,9 +6,14 @@ DOMAIN_CHOICES = (
    ('Engineering Management All','Engineering Management All'),
 )
 
+FORUM_TYPE_CHOICES = (
+    ('ForumType', 'ForumType'),
+    ('Announcement CollegeLevel DepartmentLevel SemesterLevel', 'Announcement CollegeLevel DepartmentLevel SemesterLevel'),
+)
+
 # Create your models here.
 class College(models.Model):
-    college_id = models.AutoField(primary_key=True)
+    college = models.AutoField(primary_key=True)
     applicant_id = models.CharField(max_length=200, null=False)
     college_name = models.CharField(max_length=50, null=False)
     university = models.CharField(max_length=50, null=False)
@@ -24,49 +29,64 @@ class College(models.Model):
     image5 = models.ImageField(upload_to = 'slider/', null=True)
 
 class Department(models.Model):
-    college_id = models.ForeignKey(College, on_delete=models.CASCADE,null=True)
+    college = models.ForeignKey(College, on_delete=models.CASCADE,null=True)
     department_id = models.AutoField(primary_key=True)
     department_name = models.CharField(max_length=50, null=False)
     vision_mission = models.TextField(max_length=1000, null=False)
 
 class Teacher(models.Model):
-    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     teacher_id = models.AutoField(primary_key=True)
     teacher_name = models.CharField(max_length=50, null=False)
 
 class Student(models.Model):
-    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     roll_number = models.CharField(primary_key=True, max_length=200)
     semester = models.IntegerField(null=False)
 
 class Subject(models.Model):
-    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     subject_id = models.AutoField(primary_key=True)
     subject_name = models.CharField(max_length=50, null=False)
     semester = models.IntegerField(null=False)
     taught_by = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
 
 class Syllabus(models.Model):
-    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
-    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     unit = models.IntegerField(null=False)
     unit_name = models.CharField(max_length=10, null=False)
     topics = models.TextField(max_length=1000, null=False)
 
 class SyllabusStatus(models.Model):
-    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
-    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     completed = models.IntegerField(null=False)
     given_by = models.ForeignKey(Student, on_delete=models.CASCADE, null=False)
 
 class SyllabusStatusTeacher(models.Model):
-    college_id = models.ForeignKey(College, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
-    subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     completed = models.IntegerField(null=False)
     given_by = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=False)
+
+class Forum(models.Model):
+    forum_id = models.AutoField(primary_key=True)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
+    semester = models.IntegerField(null=True)
+    forum_type = models.TextField(max_length=100, choices=FORUM_TYPE_CHOICES)
+
+class ForumMessage(models.Model):
+    message_id = models.AutoField(primary_key=True)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
+    message = models.TextField(max_length=500, null=False)
+    sent_by = models.ForeignKey(Student, on_delete=models.CASCADE)
+    isAnonymous = models.BooleanField(default=False)

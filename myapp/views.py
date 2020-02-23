@@ -193,7 +193,7 @@ def subjectForm(request):
 def getCollege(college_id):
     data = {}
 
-    college = College.objects.get(college_id = college_id)
+    college = College.objects.get(college = college_id)
     
     data["college_id"] = college_id
     data["college_name"] = college.college_name
@@ -211,7 +211,7 @@ def getCollege(college_id):
     data["image5"] = college.image5.name
     data["departments"] = []
 
-    departments = Department.objects.filter(college_id = college_id)
+    departments = Department.objects.filter(college = college_id)
 
     for department in departments:
         dep = {}
@@ -220,7 +220,7 @@ def getCollege(college_id):
         dep["vision_mission"] = department.vision_mission
         dep["subjects"] = []
 
-        subjects = Subject.objects.filter(college_id = college_id, department_id = department.department_id)
+        subjects = Subject.objects.filter(college = college_id, department = department.department_id)
 
         for subject in subjects:
             sub = {}
@@ -233,14 +233,14 @@ def getCollege(college_id):
 
             sub["syllabus"] = {}
 
-            if (len(SyllabusStatus.objects.annotate(av=Avg('completed')).filter(college_id = college_id, department_id = department.department_id, subject_id = subject.subject_id)) == 0):
+            if (len(SyllabusStatus.objects.annotate(av=Avg('completed')).filter(college = college_id, department = department.department_id, subject = subject.subject_id)) == 0):
                 sub["syllabus"]["completed"] = 0
             else:
-                sub["syllabus"]["completed"] = SyllabusStatus.objects.annotate(av=Avg('completed')).filter(college_id = college_id, department_id = department.department_id, subject_id = subject.subject_id)
+                sub["syllabus"]["completed"] = SyllabusStatus.objects.annotate(av=Avg('completed')).filter(college = college_id, department = department.department_id, subject = subject.subject_id)
 
             sub["syllabus"]["syllabus"] = []
 
-            syllabus = Syllabus.objects.filter(college_id = college_id, department_id = department.department_id, subject_id = subject.subject_id)
+            syllabus = Syllabus.objects.filter(college = college_id, department = department.department_id, subject = subject.subject_id)
 
             for syl in syllabus:
                 sy = {}
