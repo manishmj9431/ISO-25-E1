@@ -5,12 +5,16 @@ class CollegeForm(forms.ModelForm):
 
     class Meta:
         model = College
-        fields = ('college_name','university','address','contact_number','logo','domain','about_us','image1','image2','image3','image4','image5')
+        fields = ('applicant_id', 'college_name','university','address','contact_number','logo','domain','about_us','image1','image2','image3','image4','image5')
+        widgets = {'applicant_id': forms.HiddenInput()}
+
+
 class DepartmentForm(forms.ModelForm):
 
     class Meta:
         model = Department
-        fields = ('department_name','vision_mission')
+        fields = ('college', 'department_name','vision_mission')
+        widgets = {'college': forms.HiddenInput()}
 
 class SubjectForm(forms.ModelForm):
 
