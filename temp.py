@@ -1,4 +1,5 @@
 from GoogleNews import GoogleNews
+import requests
 
 def getNews(query):
     googleNews = GoogleNews()
@@ -29,9 +30,29 @@ def getNews(query):
 
     return news
 
+def getBooks(name):
+    r = requests.get("http://openlibrary.org/search.json", {'q': name})
+    data = r.json()
+    docs = data['docs']
 
+    num = min(data['num_found'], 2)
 
+    books = []
+
+    i = 0
+    for doc in docs:
+        if (i >= num):
+            break
+
+        book = {}
+        book['title'] = doc['title']
+        book['publisher'] = doc['publisher']
+        book['authors'] = doc['author_name'] 
+        books.append(book)
+        i += 1
+
+    return books
 
 if __name__ == '__main__':
     query = input()
-    print(getNews(query))
+    print(getBooks(query))

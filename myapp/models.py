@@ -90,3 +90,12 @@ class ForumMessage(models.Model):
     message = models.TextField(max_length=500, null=False)
     sent_by = models.ForeignKey(Student, on_delete=models.CASCADE)
     isAnonymous = models.BooleanField(default=False)
+
+class UpcomingEvents(models.Model):
+    event_id = models.AutoField(primary_key=True)
+    college = models.ForeignKey(College, on_delete=models.CASCADE, null = False)
+    event_name = models.CharField(max_length=50, null = False)
+    event_description = models.TextField(max_length=500, null = False)
+    event_image = models.ImageField(upload_to = 'events/', null = True)
+    start_date = models.DateField(null = False)
+    end_date = models.DateField(null = False)
