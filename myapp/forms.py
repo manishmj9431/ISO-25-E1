@@ -13,7 +13,7 @@ class DepartmentForm(forms.ModelForm):
 
     class Meta:
         model = Department
-        fields = ('college', 'department_name','vision_mission')
+        fields = ('college', 'department_name','vision_mission','hod','count')
         widgets = {'college': forms.HiddenInput()}
 
 class SubjectForm(forms.ModelForm):

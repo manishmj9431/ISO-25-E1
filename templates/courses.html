@@ -15,6 +15,8 @@
 	<link rel="stylesheet" type="text/css" href="/static/plugins/OwlCarousel2-2.2.1/animate.css">
 	<link rel="stylesheet" type="text/css" href="/static/styles/courses.css">
 	<link rel="stylesheet" type="text/css" href="/static/styles/courses_responsive.css">
+
+
 </head>
 
 <body>
@@ -158,10 +160,10 @@
 							{% for val in data.departments %}.
 							<div class="col-lg-4 course_col">
 									<div class="course">
-										<div class="course_image"><img src="http://127.0.0.1:8000/media/course_4.jpg"
+										<div class="course_image"><img src="http://127.0.0.1:8000/media/{{data.department_name}}.jpg"
 												alt=""></div>
 										<div class="course_body">
-											<h3 class="course_title"><a href="course.html">{{val.department_name}}</a></h3>
+											<h3 class="course_title">{{val.department_name}}</h3>
 											<div class="course_teacher">{{val.hod}}</div>
 											<div class="course_text">
 												<p>{{val.vision_mission}}</p>

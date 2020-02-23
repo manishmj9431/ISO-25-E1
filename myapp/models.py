@@ -15,14 +15,14 @@ FORUM_TYPE_CHOICES = (
 )
 
 DEPARTMENT_CHOICES = (
-    ('CSE', 'Computer Science'),
-    ('IT', 'Information Technology'),
-    ('EC', 'ELECTRONICS AND COMMUNICATION ENGINEERING'),
-    ('EE', 'Department of Electrical Engineering'),
-    ('EI', 'Instrumentation Engineering'),
-    ('MECH', 'Department of Mechanical Engineering'),
-    ('CIVIL', 'Department of Civil Engineering'),
-    ('MBA', 'Master of Business Administration'),
+    ('CSE', 'Computer_Science'),
+    ('IT', 'Information_Technology'),
+    ('EC', 'Electronics_And_Communication_Engineering'),
+    ('EE', 'Electrical_Engineering'),
+    ('EI', 'Instrumentation_Engineering'),
+    ('MECH', 'Mechanical_Engineering'),
+    ('CIVIL', 'Civil_Engineering'),
+    ('MBA', 'Master_of_Business_Administration'),
     ('CHEMICAL', 'Chemical'),
 )
 
@@ -46,7 +46,9 @@ class College(models.Model):
 class Department(models.Model):
     college = models.ForeignKey(College, on_delete=models.CASCADE,null=False)
     department_id = models.AutoField(primary_key=True)
-    department_name = models.TextField(max_length=100,choices=DOMAIN_CHOICES)
+    department_name = models.TextField(max_length=100,choices=DEPARTMENT_CHOICES)
+    hod = models.TextField(max_length=100)
+    count = models.CharField(max_length=50)
     vision_mission = models.TextField(max_length=1000, null=False)
 
 class Teacher(models.Model):
