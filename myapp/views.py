@@ -18,7 +18,7 @@ def about(request):
 def website_render(request):
     clg = College.objects.filter(applicant_id=request.session['uid'])
     if len(clg):
-        college = getCollege(clg[0].college_id)
+        college = getCollege(clg[0].college)
 
     if request.method == "POST":
         print(request.POST.get("submit"))
@@ -43,7 +43,7 @@ def website_render(request):
     dept_list = []
     try:
         flag = True
-        dept_list = Department.objects.filter(college_id=College.objects.get(applicant_id= request.session['uid']))
+        dept_list = Department.objects.filter(college=College.objects.get(applicant_id= request.session['uid']))
     except:
         flag = False
         dept_list = []
@@ -126,69 +126,6 @@ def after_login(request):
 
 def login_page(request):
     return render(request,'login.html')
-
-
-collegeId = ''
-
-def collegeForm(request):
-    if request.method=='POST':
-        college = College()
-        
-        college.college_name = request.POST['college_name']
-        college.university = request.POST['university_name']
-        college.address = request.POST['address']
-        college.contact_number = request.POST['contact']
-        college.logo = request.POST['logo']
-        # college.domain = request.POST['college_type']
-        college.about_us = request.POST['about_us']
-
-        college.save()
-
-        collegeId = college.college_id
-        print(college.college_id)
-    # return redirect('website_render')
-    return render(request, 'index.html', {"collegeId":collegeId})
-
-departmentId = ''
-
-def departmentForm(request):
-    if request.method=='POST':
-        department = Department()
-
-        department.department_name = request.POST['department_name']
-        department.vision_mission = request.POST['vision']
-        department.college_id = College(college_id = "1")
-
-        department.save()
-
-        departmentId = department.department_id
-        print(department.department_id)
-
-    return render(request, 'index.html', {})
-
-def subjectForm(request):
-    if request.method=='POST':
-        subject = Subjects()
-
-        subject.college_id = College(college_id = "1")
-        subject.department_id = Department(department_id = "1")
-        subject.subject_name = request.POST['subject']
-        subject.semester = request.POST['sem']
-        
-        subject.save()
-
-        for i in range(5):
-            syllabus = Syllabus()
-            syllabus.college_id = College(college_id = "1")
-            syllabus.department_id = Department(department_id = "1")
-            syllabus.subject_id = subject
-            syllabus.unit = i + 1
-            syllabus.unit_name = str(i)
-            syllabus.topics = request.POST['unit'+str(i + 1)]
-
-            syllabus.save()
-
-    return render(request, 'index.html', {})
 
 def getCollege(college_id):
     data = {}
