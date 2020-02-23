@@ -29,9 +29,9 @@
                     "recommended_books": [{
                         "title": "Book Title",
                         "publisher": ["Publishers"],
-                        "authors": ["Authors"],
+                        "authors": ["Authors"]
                     }]
-                }, ],
+                }],
                 "completed": "Completed percentage"
             }
         }]

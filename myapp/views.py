@@ -24,7 +24,6 @@ def website_render(request):
         college = getCollege(clg[0].college)
 
     if request.method == "POST":
-        print(request.POST.get("submit"))
         if request.POST.get("submit") == "clg":
             mutable_post = request.POST.copy()
             mutable_post["applicant_id"] = request.session['uid']
@@ -89,7 +88,7 @@ def user_login(request,college_id):
 @login_required(login_url='index')
 def user_logout(request,college_id):
     logout(request)
-    return redirect("http:127.0.0.1:8000/college/"+college_id)
+    return redirect("http://127.0.0.1:8000/college/"+college_id)
 
 ##########################
 
@@ -212,7 +211,9 @@ def college(request, college_id):
     data = getCollege(college_id)
     clg_news_img = getNews(data['college_name'])[0]
     clg_news = getNews(data['college_name'])[1:5]
-    return render(request, 'index.html', {"data":data,"clg_news_img":clg_news_img,"clg_news":clg_news})
+    event_list = data['upcoming_events'][0:3]
+    print(event_list)
+    return render(request, 'index.html', {"data":data,"clg_news_img":clg_news_img,"clg_news":clg_news,"event_list":event_list})
     # return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
 
 def forums(request, college_id, forum_id):
