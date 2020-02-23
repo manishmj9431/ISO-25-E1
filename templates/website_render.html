@@ -86,6 +86,8 @@
                                     <button class="tablinks active" onclick="openCity(event, 'London')">College</button>
                                     <button class="tablinks" onclick="openCity(event, 'Paris')">Department</button>
                                     <button class="tablinks" onclick="openCity(event, 'Tokyo')">Subject</button>
+                                    <button class="tablinks" onclick="openCity(event, 'London2')">Syllabus</button>
+                                    <button class="tablinks" onclick="openCity(event, 'London3')">Upcomming Events</button>
                                     <div class="tablinks" style="float: right;margin-top: 10px;"><a style="    font-size: 19px;padding: 40px;"href="{% url 'admin_user_logout' %}">Logout</a></div>
                                 </div>
                                 
@@ -164,20 +166,61 @@
                                                 </div>
                                             </div>
                                         {% endfor %}
-                                
-                                        {% for field in syllabusForm.visible_fields %}
-                                        <div class="form-group">
-                                                <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
-                                                <div class="col-sm-10">
-                                                        {% render_field field class+="form-control" placeholder=field.label required="required"%}
-                                                </div>
-                                            </div>
-                                        {% endfor %}
                                         <label class="control-label col-sm-2" for="college_name"></label>
-                                        <button type="submit" name="submit"value="subject" class="btn btn-primary">Submit</button>
+                                                <button type="submit" name="submit"value="syllabus" class="btn btn-primary">Submit</button>
                                     </form>
                                     </div>
                                 </div>
+                                <div id="London3" class="tabcontent" style="display: block;">
+                                
+                                        <div class="container" style="width: 100%;">
+                                            <h2>Upcomming Events Form</h2>
+                                            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {% for field in upForm.visible_fields %}
+                                            <div class="form-group">
+                                                    <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
+                                                    <div class="col-sm-10">
+                                                            {% render_field field class+="form-control" placeholder=field.label required="required"%}
+                                                    </div>
+                                                   
+                                                </div>
+                                            {% endfor %}
+                                    
+                                     
+                                            <label class="control-label col-sm-2" for="college_name"></label>
+                                            <button type="submit" name="submit"value="upcomming" class="btn btn-primary">Submit</button>
+                                            </form>
+                                            
+                                         
+                                        </div>
+                                    </div>
+                                <div id="London2" class="tabcontent" style="display: block;">
+                                
+                                        <div class="container" style="width: 100%;">
+                                            <h2>Syllabus Form</h2>
+                                            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {% for field in syllabusForm.visible_fields %}
+                                            <div class="form-group">
+                                                    <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
+                                                    <div class="col-sm-10">
+                                                            {% render_field field class+="form-control" placeholder=field.label required="required"%}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                            <label class="control-label col-sm-2" for="college_name"></label>
+                                            <button type="submit" name="submit"value="syllabus" class="btn btn-primary">Submit</button>
+                                    
+                                     
+                                           
+                                            </form>
+                                            
+                                         
+                                        </div>
+                                    </div>
+
+                                   
                     </div>
                 </div>
                

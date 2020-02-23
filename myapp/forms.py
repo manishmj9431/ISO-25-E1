@@ -32,4 +32,5 @@ class UpcommingForm(forms.ModelForm):
 
     class Meta:
         model = UpcomingEvents
-        fields = ('event_name','event_description','event_image','start_date','end_date')
+        fields = ('college','event_name','event_description','event_image','start_date','end_date')
+        widgets = {'college': forms.HiddenInput()}

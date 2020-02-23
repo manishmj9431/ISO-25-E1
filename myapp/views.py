@@ -32,8 +32,15 @@ def website_render(request):
             clgForm = CollegeForm(mutable_post, request.FILES)
             if clgForm.is_valid():
                 clgForm.save()
-                return redirect('website_render')   
-
+            return redirect('website_render')   
+        elif request.POST.get("submit") == "upcomming":
+            clg = College.objects.filter(applicant_id=request.session['uid'])
+            mutable_post = request.POST.copy()
+            mutable_post["college"] = clg[0].college
+            upForm = UpcommingForm(mutable_post, request.FILES)
+            if upForm.is_valid():
+                upForm.save()    
+            return redirect('website_render')
         elif request.POST.get("submit") == "dept":
             clg = College.objects.filter(applicant_id=request.session['uid'])
             mutable_post = request.POST.copy()
@@ -52,7 +59,7 @@ def website_render(request):
                         ))
                 
                 Student.objects.bulk_create(students)
-                return redirect('website_render')
+            return redirect('website_render')
                 
 
     clgForm = CollegeForm()
@@ -220,8 +227,8 @@ def getCollege(college_id):
 
 def college(request, college_id):
     data = getCollege(college_id)
-    clg_news_img = getNews(data['college_name'])[0]
-    clg_news = getNews(data['college_name'])[1:5]
+    clg_news_img = getNews(data['college_name'])[1]
+    clg_news = getNews(data['college_name'])[2:7]
     event_list = data['upcoming_events'][0:3]
     print(event_list)
     return render(request, 'index.html', {"data":data,"clg_news_img":clg_news_img,"clg_news":clg_news,"event_list":event_list})
@@ -265,7 +272,7 @@ def getNews(query):
 
     i = 0
 
-    number = min([len(googleNews.result()), 6])
+    number = min([len(googleNews.result()), 7])
 
     for result in googleNews.result():
         if (i > number):
