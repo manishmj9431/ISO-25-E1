@@ -7,6 +7,7 @@ from django.db.models import Avg
 import json
 from django.urls import reverse
 from myapp.forms import *
+from GoogleNews import GoogleNews
 
 # Create your views here.
 def index(request):
@@ -199,3 +200,19 @@ def college(request, college_id):
     # return render(request, 'index.html', {"data":data})
     return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
 
+def getNews(query):
+    googleNews = GoogleNews()
+    googleNews.search(query)
+
+    news = []
+    for result in googleNews.result():
+        n = {}
+        n["title"] = result['title']
+        n["description"] = result['desc']
+        n["link"] = result['link']
+
+        news.append(n)
+
+    googleNews.clear()
+
+    return news
