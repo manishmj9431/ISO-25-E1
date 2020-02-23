@@ -89,6 +89,7 @@ class ForumMessage(models.Model):
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
     message = models.TextField(max_length=500, null=False)
     sent_by = models.ForeignKey(Student, on_delete=models.CASCADE)
+    sent_at = models.DateTimeField(null=True)
     isAnonymous = models.BooleanField(default=False)
 
 class UpcomingEvents(models.Model):

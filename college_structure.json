@@ -23,33 +23,25 @@
             "taught_by": "Taught By",
             "syllabus": {
                 "syllabus": [{
-                        "unit": "Unit1",
-                        "unit_name": "Unit Name",
-                        "topics": "Topics"
-                    },
-                    {
-                        "unit": "Unit2",
-                        "unit_name": "Unit Name",
-                        "topics": "Topics"
-                    },
-                    {
-                        "unit": "Unit3",
-                        "unit_name": "Unit Name",
-                        "topics": "Topics"
-                    },
-                    {
-                        "unit": "Unit4",
-                        "unit_name": "Unit Name",
-                        "topics": "Topics"
-                    },
-                    {
-                        "unit": "Unit5",
-                        "unit_name": "Unit Name",
-                        "topics": "Topics"
-                    }
-                ],
+                    "unit": "Unit1",
+                    "unit_name": "Unit Name",
+                    "topics": "Topics",
+                    "recommended_books": [{
+                        "title": "Book Title",
+                        "publisher": ["Publishers"],
+                        "authors": ["Authors"],
+                    }]
+                }, ],
                 "completed": "Completed percentage"
             }
         }]
+    }],
+    "upcoming_events": [{
+        "event_id": "Event id",
+        "event_name": "Event name",
+        "event_description": "Event Description",
+        "event_image": "Event Image",
+        "start_date": "Event start date",
+        "end_date": "Event end date"
     }]
 }
