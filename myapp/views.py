@@ -9,6 +9,7 @@ from django.urls import reverse
 from myapp.forms import *
 from GoogleNews import GoogleNews
 from profanity_check import predict, predict_prob
+import requests
 
 # Create your views here.
 def index(request):
@@ -194,6 +195,7 @@ def getCollege(college_id):
                 sy["unit"] = syl.unit
                 sy["unit_name"] = syl.unit_name
                 sy["topics"] = syl.topics
+                sy["recommended_books"] = getBooks(subject.subject_name + syl.unit_name, 1)
 
                 sub["syllabus"]["syllabus"].append(sy)
 
@@ -226,6 +228,23 @@ def college(request, college_id):
     return render(request, 'index.html', {"data":data,"clg_news_img":clg_news_img,"clg_news":clg_news})
     # return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
 
+def forums(request, college_id, forum_id):
+    messages = []
+    msgs = ForumMessage.objects.filter(college = college_id, forum = forum_id)
+
+    for m in msgs:
+        message = {}
+        message["message"] = m.message
+        message["sent_at"] = m.sent_at
+        if (m.isAnonymous):
+            message["sent_by"] = "anonymous"
+        else:
+            message["sent_by"] = m.sent_by
+        
+        messages.append(message)
+
+    return HttpResponse(json.dumps(messages, indent=4), content_type="application/json")
+
 def getNews(query):
     googleNews = GoogleNews()
     googleNews.search(query)
@@ -255,6 +274,30 @@ def getNews(query):
     googleNews.clear()
 
     return news
+
+def getBooks(query, num_books):
+    r = requests.get("http://openlibrary.org/search.json", {'q': query})
+    data = r.json()
+    docs = data['docs']
+
+    num = min(data['num_found'], num_books)
+
+    books = []
+
+    i = 0
+    for doc in docs:
+        if (i >= num):
+            break
+
+        book = {}
+        book['title'] = doc['title']
+        book['publisher'] = doc['publisher']
+        book['authors'] = doc['author_name'] 
+        books.append(book)
+        i += 1
+
+    return books
+
 
 def predict_profanity(message):
     return predict([message])
