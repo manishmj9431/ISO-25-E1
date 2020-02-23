@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>{{ data.college_name }}</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="{{ data.college_name }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" type="text/css" href= "{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+<link rel="shortcut icon" href="http://127.0.0.1:8000/media/{{data.logo}}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+        body {
+            font-family: Arial;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<header class="header">
+		
+		<!-- Top Bar -->
+
+
+		<!-- Header Content -->
+		<div class="header_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="header_content d-flex flex-row align-items-center justify-content-start">
+							<div class="logo_container">
+								<a href="#">
+									<img src="http://127.0.0.1:8000/media/{{data.logo}}" style="width: 50px;height: 50px;">
+									<div class="logo_text">
+										<h4>ISO - 25 (Kuch_bhi)</h4>
+										<h5>Generate Website</h5>
+									</div>
+								</a>
+							</div>
+							<nav class="main_nav_contaner ml-auto">
+								<ul class="main_nav">
+									<li><a href="{% url 'admin_user_logout' %}">Logout</a></li>
+								</ul>
+
+								<!-- Hamburger -->
+
+								
+							</nav>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+				
+	</header>
+    <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'London')">College</button>
+            <button class="tablinks" onclick="openCity(event, 'Paris')">Department</button>
+            <button class="tablinks" onclick="openCity(event, 'Tokyo')">Subject</button>
+        </div>
+        
+        <div id="London" class="tabcontent">
+        
+            <div class="container">
+                <h2>College Form</h2>
+                <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in clgForm.visible_fields %}
+                <div class="form-group">
+                        <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
+                        <div class="col-sm-10">
+                                {% render_field field class+="form-control" placeholder=field.label required="required"%}
+                        </div>
+                       
+                    </div>
+                {% endfor %}
+        
+         
+                <label class="control-label col-sm-2" for="college_name"></label>
+                <button type="submit" name="submit"value="clg" class="btn btn-primary">Submit</button>
+                </form>
+                
+             
+            </div>
+        </div>
+        
+        <div id="Paris" class="tabcontent">
+            <div class="container">
+                <h2>Department Form</h2>
+            
+                <form class="form-horizontal" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="college_id" value="{{college_id}}">
+                {% for field in deptForm.visible_fields %}
+                <div class="form-group">
+                        <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
+                        <div class="col-sm-10">
+                            
+                                {% render_field field class+="form-control" placeholder=field.label required="required"%}
+                        </div>
+                    </div>
+                {% endfor %}
+        
+              
+                <label class="control-label col-sm-2" for="college_name"></label>
+                <button type="submit" name="submit"value="dept" class="btn btn-primary">Submit</button>
+            </form>
+            </div>
+        </div>
+        
+        <div id="Tokyo" class="tabcontent">
+            <div class="container">
+                <h2>Subject Form</h2>
+                <form class="form-horizontal" method="POST">
+                        {% csrf_token %}
+                
+                {% if flag %}
+                <select class="form-group" name="department_id">
+                    {% for i in dept_list%} 
+                    <option value="{{i.department_id}}">i.department_name</option>
+                    {% endfor %}
+                </select>
+                {%endif%}
+                {% for field in subForm.visible_fields %}
+                <div class="form-group">
+                        <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
+                        <div class="col-sm-10">
+                                {% render_field field class+="form-control" placeholder=field.label required="required"%}
+                        </div>
+                    </div>
+                {% endfor %}
+        
+                {% for field in syllabusForm.visible_fields %}
+                <div class="form-group">
+                        <label class="control-label col-sm-2" for="college_name">{{field.label}}: </label>
+                        <div class="col-sm-10">
+                                {% render_field field class+="form-control" placeholder=field.label required="required"%}
+                        </div>
+                    </div>
+                {% endfor %}
+                <label class="control-label col-sm-2" for="college_name"></label>
+                <button type="submit" name="submit"value="subject" class="btn btn-primary">Submit</button>
+            </form>
+            </div>
+        </div>
+        
+        <script>
+            function openCity(evt, cityName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+
+</div>
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
+<script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

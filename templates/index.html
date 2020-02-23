@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Unicat</title>
+<title>{{ data.college_name }}</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Unicat project">
+<meta name="description" content="{{ data.college_name }}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+<link rel="shortcut icon" href="http://127.0.0.1:8000/media/{{data.logo}}" />
 </head>
 <body>
 
@@ -22,7 +23,27 @@
 	<!-- Header -->
 
 	<header class="header">
-			
+			<div class="top_bar">
+					<div class="top_bar_container">
+						<div class="container">
+							<div class="row">
+								<div class="col">
+									<div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
+										<ul class="top_bar_contact_list">
+											<li><div class="question"></div></li>
+											<li>
+											</li>
+											<li>
+												<div></div>
+											</li>
+										</ul>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>				
+				</div>
 		<!-- Top Bar -->
 
 
@@ -47,9 +68,9 @@
 									<li><a href="courses.html">Departments</a></li>
 									<li><a href="contact.html">Contact</a></li>
 									{% if user.is_authenticated %}
-									<li><a href="{% url  'user_logout' %}">Logout</a></li>
+									<li><a href="user_logout">Logout</a></li>
 									{%else%}
-									<li><a href="login_page">Login</a></li>
+									<li><a href="lp">Login</a></li>
 									{%endif%}
 								</ul>
 
@@ -69,7 +90,7 @@
 
 	<!-- Menu -->
 
-	<!-- <div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+	<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
 		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
 		<div class="search">
 			<form action="#" class="header_search_form menu_mm">
@@ -89,7 +110,7 @@
 				<li class="menu_mm"><a href="contact.html">Contact</a></li>
 			</ul>
 		</nav>
-	</div> -->
+	</div>
 	
 	<!-- Home -->
 

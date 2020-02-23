@@ -76,18 +76,19 @@ def user_login(request,college_id):
                 # request.session['member_cat'] = val
                 # return HttpResponseRedirect(reverse('index'))
                 if val == 'student':
-                    return redirect('student_home')
+                    return render(request,'student_home.html')
                 else:
-                    return redirect('teacher_home')
+                    return render(request,'teacher_home.html')
+
         else:
-            return render(request,'index.html')
+            return render(request,'login.html')
               
-    return render(request,'index.html',{})
+    return render(request,'login.html')
 
 @login_required(login_url='index')
-def user_logout(request):
+def user_logout(request,college_id):
     logout(request)
-    return HttpResponseRedirect(reverse("admin_index"))
+    return redirect("http:127.0.0.1:8000/college/"+college_id)
 
 ##########################
 
@@ -119,20 +120,6 @@ def admin_login_page(request):
     return render(request,'admin/admin_index.html')
 
 ##########################
-def teacher_home(request):
-    return render(request,'teacher_home.html')
-
-def student_home(request):
-    return render(request,'student_home.html')
-
-@login_required(login_url='index')
-def after_login(request):
-    val = "student"
-    if val == 'student':
-        return redirect('student_home')
-        # return redirect('apply_project')
-    else:
-        return redirect('teacher_home')
 
 def login_page(request,college_id):
     return render(request,'login.html')
