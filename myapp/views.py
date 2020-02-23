@@ -204,7 +204,6 @@ def getCollege(college_id):
 
 def college(request, college_id):
     data = getCollege(college_id)
-    
     return render(request, 'index.html', {"data":data})
     return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
 
