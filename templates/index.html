@@ -158,7 +158,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="section_title_container text-center">
-						<h2 class="section_title">Welcome To {{data.college}}</h2>
+						<h2 class="section_title">Welcome To {{data.college_name}}</h2>
 						<div class="section_subtitle"><p>{{data.about_us}}</p></div>
 					</div>
 				</div>
@@ -325,17 +325,16 @@
 					<div class="news_post_large_container">
 						<div class="news_post_large">
 							<div class="news_post_image"><img src="http://127.0.0.1:8000/media/news_1.jpg" alt=""></div>
-							<div class="news_post_large_title"><a href="blog_single.html">Here’s What You Need to Know About Online Testing for the ACT and SAT</a></div>
+							<div class="news_post_large_title"><a href="{{clg_news_img.link}}">{{clg_news_img.title}}</a></div>
 							<div class="news_post_meta">
 								<ul>
-									<li><a href="#">admin</a></li>
-									<li><a href="#">november 11, 2017</a></li>
+									<li>{{clg_news_img.date}}</li>
 								</ul>
 							</div>
 							<div class="news_post_text">
-								<p>Policy analysts generally agree on a need for reform, but not on which path policymakers should take. Can America learn anything from other nationshttp://127.0.0.1:8000.</p>
+								<p>{{clg_news_img.description}}</p>
 							</div>
-							<div class="news_post_link"><a href="blog_single.html">read more</a></div>
+							<div class="news_post_link"><a href="{{clg_news_img.link}}">read more</a></div>
 						</div>
 					</div>
 				</div>
@@ -344,48 +343,18 @@
 					<div class="news_posts_small">
 
 						<!-- News Posts Small -->
+						{% for val in clg_news %}
 						<div class="news_post_small">
-							<div class="news_post_small_title"><a href="blog_single.html">Home-based business insurance issue (Spring 2017 - 2018)</a></div>
-							<div class="news_post_meta">
-								<ul>
-									<li><a href="#">admin</a></li>
-									<li><a href="#">november 11, 2017</a></li>
-								</ul>
+								<div class="news_post_small_title"><a href="{{val.link}}">{{val.title}}</a></div>
+								<div class="news_post_meta">
+									<ul>
+										<li>{{val.date}}</li>
+									</ul>
+								</div>
 							</div>
-						</div>
+						{%endfor%}
 
-						<!-- News Posts Small -->
-						<div class="news_post_small">
-							<div class="news_post_small_title"><a href="blog_single.html">2018 Fall Issue: Credit Card Comparison Site Survey (Summer 2018)</a></div>
-							<div class="news_post_meta">
-								<ul>
-									<li><a href="#">admin</a></li>
-									<li><a href="#">november 11, 2017</a></li>
-								</ul>
-							</div>
-						</div>
-
-						<!-- News Posts Small -->
-						<div class="news_post_small">
-							<div class="news_post_small_title"><a href="blog_single.html">Cuentas de cheques gratuitas una encuesta de Consumer Action</a></div>
-							<div class="news_post_meta">
-								<ul>
-									<li><a href="#">admin</a></li>
-									<li><a href="#">november 11, 2017</a></li>
-								</ul>
-							</div>
-						</div>
-
-						<!-- News Posts Small -->
-						<div class="news_post_small">
-							<div class="news_post_small_title"><a href="blog_single.html">Troubled borrowers have fewer repayment or forgiveness options</a></div>
-							<div class="news_post_meta">
-								<ul>
-									<li><a href="#">admin</a></li>
-									<li><a href="#">november 11, 2017</a></li>
-								</ul>
-							</div>
-						</div>
+						
 
 					</div>
 				</div>
@@ -413,7 +382,7 @@
 								<div class="footer_section footer_about">
 									<div class="footer_logo_container">
 										<a href="#">
-											<div class="footer_logo_text">{{data.college}}</div>
+											<div class="footer_logo_text">{{data.college_name}}</div>
 										</a>
 									</div>
 									<div class="footer_about_text">

@@ -25,11 +25,11 @@ def website_render(request):
     if request.method == "POST":
         print(request.POST.get("submit"))
         if request.POST.get("submit") == "clg":
-            print(request.POST)
-            clgForm = CollegeForm(request.POST, request.FILES)
+            mutable_post = request.POST.copy()
+            mutable_post["applicant_id"] = request.session['uid']
+            print(mutable_post)
+            clgForm = CollegeForm(mutable_post, request.FILES)
             if clgForm.is_valid():
-                clgForm.save(commit=False)
-                clgForm.applicant_id = request.session['uid']
                 clgForm.save()
                 return HttpResponse("Hello")    
 
@@ -205,8 +205,10 @@ def getCollege(college_id):
 
 def college(request, college_id):
     data = getCollege(college_id)
-    return render(request, 'index.html', {"data":data})
-    return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
+    clg_news_img = getNews(data['college_name'])[0]
+    clg_news = getNews(data['college_name'])[1:5]
+    return render(request, 'index.html', {"data":data,"clg_news_img":clg_news_img,"clg_news":clg_news})
+    # return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
 
 def getNews(query):
     googleNews = GoogleNews()
@@ -226,6 +228,7 @@ def getNews(query):
         n["title"] = result['title']
         n["description"] = result['desc']
         n["link"] = result['link']
+        n['date'] = result['date']
     
         if (i == 0):
             n["image"] = result['img']
