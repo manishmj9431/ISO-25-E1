@@ -20,7 +20,7 @@
         <div class="counter_form" style="left: 35%;">
 				<div class="row fill_height">
 					<div class="col fill_height">
-						<form class="counter_form_content d-flex flex-column align-items-center justify-content-center" action="{% url 'user_login' %}" method="POST">
+						<form class="counter_form_content d-flex flex-column align-items-center justify-content-center" action="user_login" method="POST">
                                 {% csrf_token %}
                             <div class="counter_form_title">Login</div>
 							<input type="text"  name="username" class="counter_input" placeholder="Enrollment:" required="required">

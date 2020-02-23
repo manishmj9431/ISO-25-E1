@@ -61,7 +61,7 @@ def website_render(request):
     syllabusForm = SyllabusForm()
     return render(request,'website_render.html',{"user_id": request.session['uid'],"college_id":college,"clgForm":clgForm,"deptForm":deptForm,"flag":flag,"subForm":subForm,"syllabusForm":syllabusForm,"dept_list":dept_list})
 
-def user_login(request):
+def user_login(request,college_id):
 
     if request.method == 'POST':
 
@@ -134,7 +134,7 @@ def after_login(request):
     else:
         return redirect('teacher_home')
 
-def login_page(request):
+def login_page(request,college_id):
     return render(request,'login.html')
 
 def getCollege(college_id):
