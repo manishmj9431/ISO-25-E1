@@ -36,4 +36,5 @@ urlpatterns = [
     path('admin_user_login/', views.admin_user_login, name="admin_user_login"),
     path('admin_user_logout/', views.admin_user_logout, name="admin_user_logout"),
     path('admins/', views.admin_login_page, name="admin_login_page"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   
+    path("about/",views.about,name="about")
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

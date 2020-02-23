@@ -11,7 +11,12 @@ from django.urls import reverse
 def index(request):
     return render(request,'index.html',{})
 
+def about(request):
+    return render(request,'about.html',{})
+
 def website_render(request):
+    # clg = College.objects.filter(user_id=request.session['uid'])
+    #Give me complete clg object    
     return render(request,'website_render.html',{})
 
 def user_login(request):
@@ -54,7 +59,8 @@ def admin_user_login(request):
         if user:
             if user.is_active:
                 login(request,user)
-                # request.session['member_cat'] = val
+                # print()
+                request.session['uid'] = User.objects.get(username=username).id 
                 # return HttpResponseRedirect(reverse('index'))
                 return redirect('website_render')
         else:
@@ -101,7 +107,7 @@ def collegeForm(request):
         college.address = request.POST['address']
         college.contact_number = request.POST['contact']
         college.logo = request.POST['logo']
-        college.domain = request.POST['college_type']
+        # college.domain = request.POST['college_type']
         college.about_us = request.POST['about_us']
 
         college.save()
@@ -214,5 +220,6 @@ def college(request, college_id):
 
         data["departments"].append(dep)
 
-    #return render(request, 'index.html', {"college":college})
+    # return render(request, 'index.html', {"data":data})
     return HttpResponse(json.dumps(data, indent=4), content_type="application/json")
+
