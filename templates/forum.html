@@ -54,7 +54,7 @@
         <span class="time-right">{{message.sent_at}}</span>
     </div>
     {%endfor%}
-    <form action="/action_page.php">
+    <form action="forums" method="POST">
         <input type="text" placeholder="Send.." name="send", id="send">
         <button type="submit">Submit</button>
     </form>

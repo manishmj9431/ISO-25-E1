@@ -15,15 +15,15 @@ FORUM_TYPE_CHOICES = (
 )
 
 DEPARTMENT_CHOICES = (
-    ('CSE', 'Computer_Science'),
-    ('IT', 'Information_Technology'),
-    ('EC', 'Electronics_And_Communication_Engineering'),
-    ('EE', 'Electrical_Engineering'),
-    ('EI', 'Instrumentation_Engineering'),
-    ('MECH', 'Mechanical_Engineering'),
-    ('CIVIL', 'Civil_Engineering'),
-    ('MBA', 'Master_of_Business_Administration'),
-    ('CHEMICAL', 'Chemical'),
+    ('Computer_Science', 'Computer_Science'),
+    ('Information_Technology', 'Information_Technology'),
+    ('Electronics_Engineering', 'Electronics_Engineering'),
+    ('Electrical_Engineering', 'Electrical_Engineering'),
+    ('Instrumentation_Engineering', 'Instrumentation_Engineering'),
+    ('Mechanical_Engineering', 'Mechanical_Engineering'),
+    ('Civil_Engineering', 'Civil_Engineering'),
+    ('MBA', 'MBA'),
+    ('Chemical', 'Chemical'),
 )
 
 # Create your models here.

@@ -63,13 +63,13 @@
 						<div class="col">
 							<div class="header_content d-flex flex-row align-items-center justify-content-start">
 								<div class="logo_container">
-									<a href="#">
-										<img src="http://127.0.0.1:8000/media/" style="width: 50px;height: 50px;">
-										<div class="logo_text">
-											<h4></h4>
-											<h5></h5>
-										</div>
-									</a>
+										<a href="#">
+												<img src="http://127.0.0.1:8000/media/{{data.logo}}" style="width: 50px;height: 50px;">
+												<div class="logo_text">
+													<h4>{{ data.college_name }}</h4>
+													<h5>{{ data.university }}</h5>
+												</div>
+											</a>
 								</div>
 								<nav class="main_nav_contaner ml-auto">
 									<ul class="main_nav">
@@ -77,7 +77,7 @@
 										<li><a href="Departments.html">Departments</a></li>
 										<li><a href="contact.html">Contact</a></li>
 
-										<li><a href="lp">Login</a></li>
+								</ul>
 
 									</ul>
 
@@ -115,12 +115,9 @@
 			</div>
 			<nav class="menu_nav">
 				<ul class="menu_mm">
-					<li class="menu_mm"><a href="index.html">Home</a></li>
-					<li class="menu_mm"><a href="#">About</a></li>
-					<li class="menu_mm"><a href="#">Courses</a></li>
-					<li class="menu_mm"><a href="#">Blog</a></li>
-					<li class="menu_mm"><a href="#">Page</a></li>
-					<li class="menu_mm"><a href="contact.html">Contact</a></li>
+					<li class="menu_mm"><a href="#">Home</a></li>
+					<li class="menu_mm"><a href="#">Departments</a></li>
+					<li class="menu_mm"><a href="#">Contact</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -134,8 +131,8 @@
 						<div class="col">
 							<div class="breadcrumbs">
 								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li>Courses</li>
+									<li><a href="#">Home</a></li>
+									<li>Departments</li>
 								</ul>
 							</div>
 						</div>
@@ -158,9 +155,9 @@
 
 								<!-- Course -->
 							{% for val in data.departments %}.
-							<div class="col-lg-4 course_col">
+							<div class="col-md-5 course_col">
 									<div class="course">
-										<div class="course_image"><img src="http://127.0.0.1:8000/media/{{data.department_name}}.jpg"
+										<div class="course_image"><img src="http://127.0.0.1:8000/media/dept/{{val.department_name}}.jpg"
 												alt=""></div>
 										<div class="course_body">
 											<h3 class="course_title">{{val.department_name}}</h3>

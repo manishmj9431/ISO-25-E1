@@ -23,6 +23,7 @@ def website_render(request):
     clg = College.objects.filter(applicant_id=request.session['uid'])
     if len(clg):
         college = getCollege(clg[0].college)
+        #Edit Dashboard
 
     if request.method == "POST":
         if request.POST.get("submit") == "clg":
@@ -31,9 +32,10 @@ def website_render(request):
             clgForm = CollegeForm(mutable_post, request.FILES)
             if clgForm.is_valid():
                 clgForm.save()
-                return HttpResponse("Hello")    
+                return redirect('website_render')   
 
         elif request.POST.get("submit") == "dept":
+            clg = College.objects.filter(applicant_id=request.session['uid'])
             mutable_post = request.POST.copy()
             mutable_post["college"] = clg[0].college
             deptForm = DepartmentForm(mutable_post)
@@ -50,7 +52,7 @@ def website_render(request):
                         ))
                 
                 Student.objects.bulk_create(students)
-                return HttpResponse("Hello")
+                return redirect('website_render')
                 
 
     clgForm = CollegeForm()
@@ -82,13 +84,9 @@ def user_login(request,college_id):
         if user:
             if user.is_active:
                 login(request,user)
-                val = "student"
                 # request.session['member_cat'] = val
                 # return HttpResponseRedirect(reverse('index'))
-                if val == 'student':
-                    return render(request,'student_home.html')
-                else:
-                    return render(request,'teacher_home.html')
+                return render(request,'forum.html')
 
         else:
             return render(request,'login.html')
@@ -162,6 +160,8 @@ def getCollege(college_id):
         dep["department_id"] = department.department_id
         dep["department_name"] = department.department_name
         dep["vision_mission"] = department.vision_mission
+        dep["hod"] = department.hod
+        dep["count"] = department.count
         dep["subjects"] = []
 
         subjects = Subject.objects.filter(college = college_id, department = department.department_id)
@@ -253,7 +253,7 @@ def forums(request, college_id, forum_id):
         
         messages.append(message)
 
-    return HttpResponse(json.dumps(messages, indent=4), content_type="application/json")
+    return render(request,'forum.html',{"message":message})
 
 def getNews(query):
     googleNews = GoogleNews()
@@ -310,3 +310,8 @@ def getBooks(query, num_books):
 
 def predict_profanity(message):
     return predict([message])
+
+def getDepartment(request,college_id):
+    data = getCollege(college_id)
+    return render(request, 'department.html', {"data":data})
+    
