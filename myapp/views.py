@@ -244,16 +244,17 @@ def forums(request, college_id, forum_id):
 
     for m in msgs:
         message = {}
+        print(m.isAnonymous)
         message["message"] = m.message
         message["sent_at"] = m.sent_at
-        if (m.isAnonymous):
+        if (m.isAnonymous == True):
             message["sent_by"] = "anonymous"
         else:
             message["sent_by"] = m.sent_by
         
         messages.append(message)
 
-    return render(request,'forum.html',{"message":message})
+    return render(request,'forum.html',{"messages":messages})
 
 def getNews(query):
     googleNews = GoogleNews()

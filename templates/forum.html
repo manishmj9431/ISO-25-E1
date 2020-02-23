@@ -49,8 +49,8 @@
     {% for message in messages %}
     <div class="container">
         <i class="fa fa-user" aria-hidden="true"></i>
-        <p> {{message.sent_by}} </p>
-        <p> {{message.message}} </p>
+        <p>  Sent By: {{message.sent_by}} </p>
+        <p> Message: {{message.message}} </p>
         <span class="time-right">{{message.sent_at}}</span>
     </div>
     {%endfor%}
