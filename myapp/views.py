@@ -201,6 +201,22 @@ def getCollege(college_id):
 
         data["departments"].append(dep)
 
+    data["upcoming_events"] = []
+
+    upcomingEvents = UpcomingEvents.objects.filter(college = college_id)
+
+    for event in upcomingEvents:
+        e = {}
+        
+        e["event_id"] = event.event_id
+        e["event_name"] = event.event_name
+        e["event_description"] = event.event_description
+        e["event_image"] = event.event_image
+        e["start_date"] = event.start_date
+        e["end_date"] = event.end_date
+
+        data["upcoming_events"].append(e)
+
     return data
 
 def college(request, college_id):
